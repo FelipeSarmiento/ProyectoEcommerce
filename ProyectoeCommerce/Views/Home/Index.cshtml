@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Server.Kestrel.Core
+@{
+    ViewData["Title"] = "Home Page";
+    var listaNegocios = ViewBag.ListaNegocios;
+    var listaCategorias = ViewBag.ListaCategorias;
+    var listaProductos = ViewBag.ListaProductos;
+}
+<div class="text-center font-extrabold text-3xl pb-8">
+    <span>Negocios</span>
+</div>
+<div class="space-x-4 w-full grid grid-cols-4 h-[230px] pb-5">
+    @{
+        if (listaNegocios.Item1)
+        {
+            foreach (var negocio in listaNegocios.Item2)
+            {
+                <div class="box-border border-purple-600 rounded-lg p-2">
+                    <a asp-action="Negocio" asp-controller="Negocios" asp-route-idNegocio="@negocio.idNegocio">
+                        <div class="h-3/4 border border-black flex items-center justify-center rounded-lg">
+                            <img class="h-full w-full object-cover rounded-lg" src="https://media.gettyimages.com/photos/luxury-restaurant-interior-at-night-picture-id1248298359?s=612x612" alt="">
+                        </div>
+                        <div class="flex h-1/4 items-center justify-center">
+                            <h1 class="font-bold">@negocio.Nombre</h1>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <h2 class="text-center">No hay negocios para mostrar</h2>
+        }
+
+    }
+</div>
+<div class="text-center font-extrabold text-3xl py-8">Categorias</div>
+<div class="w-full grid grid-flow-col auto-cols-[minmax(1,2fr)] justify-center items-center gap-5 min-h-[250px] pb-5">
+    @{
+        if (listaCategorias.Item1)
+        {
+            foreach (var categoria in listaCategorias.Item2)
+            {
+                <div class="h-[10vw] w-[10vw] flex items-center justify-center border-4 border-dotted border-purple-300 hover:border-purple-600 hover:border-solid font-extrabold text-purple-600 rounded-full text-center">
+                    @categoria.Nombre
+                </div>
+            }
+        }
+        else
+        {
+            <h2 class="text-center">No hay categorias para mostrar</h2>
+        }
+    }
+</div>
+<div class="text-center font-extrabold text-3xl py-8">Productos</div>
+<div class="w-full grid grid-cols-5 gap-4  pb-5">
+    @{
+        if (listaProductos.Count != 0)
+        {
+            foreach (var producto in listaProductos)
+            {
+                <div class="min-w-[calc(20vw_-_22px)] h-[230px]  box-border border-purple-600 rounded-lg p-2">
+                    <div class="h-3/4 border border-black flex items-center justify-center rounded-lg">
+                        <img class="h-full w-full object-cover rounded-lg" src="https://c8.alamy.com/compes/jhyrtg/comida-casera-de-pollo-cordon-bleu-y-papas-fritas-jhyrtg.jpg" alt="">
+                    </div>
+                    <div class="flex h-1/4 items-center justify-center">
+                        <h1 class="font-bold">@producto.Nombre</h1>
+                    </div>
+
+                </div>
+            }
+        }
+        else
+        {
+            <h2>No hay productos para mostrar</h2>
+        }
+
+    }
+</div>

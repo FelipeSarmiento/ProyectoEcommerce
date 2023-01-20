@@ -1,0 +1,154 @@
+﻿@model NegocioModel
+@{
+    ViewBag.Title = "Administrar " + ViewBag.Titulo;
+    var informacionNegocio = ViewBag.InformacionNegocio;
+    var categorias = ViewBag.Categorias;
+}
+
+@{
+    if (informacionNegocio.Item1)
+    {
+        <div class="min-h-full flex items-center justify-center">
+            <div class="w-9/12 space-y-8">
+                <div>
+                    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Editar Negocio</h2>
+                    <h2 class="text-center mt-2 text-xl font-extrabold text-purple-600">@TempData["Message"]</h2>
+                </div>
+                <form class="mt-8 space-y-6" asp-action="AdministrarNegocioForm" asp-controller="Negocios" method="POST">
+                    <div class="rounded-md shadow-sm -space-y-px grid grid-cols-2 gap-x-8">
+                        <input asp-for="idNegocio" type="hidden" value="@informacionNegocio.Item2.idNegocio">
+                        <div>
+                            <label for="nit" class="">NIT</label>
+                            <input asp-for="NITNegocio" id="nit" type="text" required autocomplete="off" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="NIT" value="@informacionNegocio.Item2.NITNegocio">
+                        </div>
+                        <div>
+                            <label for="nombre" class="">Nombre del Negocio</label>
+                            <input asp-for="Nombre" id="nombre" type="text" required autocomplete="off" class="appearance-none bg-gray-100 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Nombre del Negocio" value="@informacionNegocio.Item2.Nombre">
+                        </div>
+                        <div>
+                            <label for="telefono" class="">Telefono</label>
+                            <input asp-for="Telefono" id="telefono" type="text" required autocomplete="off" class="appearance-none bg-gray-100 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Primer Nombre" value="@informacionNegocio.Item2.Telefono">
+                        </div>
+                        <div>
+                            <label for="descripcion" class="">Descripción</label>
+                            <input asp-for="Descripcion" id="descripcion" type="text" required autocomplete="off" class="appearance-none bg-gray-100 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Descripción del negocio" value="@informacionNegocio.Item2.Descripcion">
+                        </div>
+                        <div>
+                            <label for="direccion" class="">Dirección</label>
+                            <input asp-for="Direccion" id="direccion" type="text" required autocomplete="off" class="appearance-none bg-gray-100 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Direccion" value="@informacionNegocio.Item2.Direccion">
+                        </div>
+                        <div>
+                            <label for="categoria" class="">Categoria:</label>
+                            <select asp-for="idCategoria" id="categoria" class="bg-gray-100 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                                @{
+                                    if (categorias != null)
+                                    {
+                                        foreach (var categoria in categorias.Item2)
+                                        {
+                                            if (categoria.idCategoria == informacionNegocio.Item2.idCategoria)
+                                            {
+                                                <option value="@categoria.idCategoria" selected="selected">@categoria.Nombre</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@categoria.idCategoria">@categoria.Nombre</option>
+                                            }
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 justify-center">
+                        <button type="submit" class="group relative w-2/4 overflow-x-hidden flex justify-center py-2 px-4 border text-sm font-medium rounded-md text-purple-600 border-2 border-purple-600 hover:bg-purple-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Editar negocio
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        if (informacionNegocio.Item3.Count != 0)
+        {
+            <div class="text-center font-extrabold text-3xl py-8">Productos</div>
+            <div class="h-10 flex justify-end px-10 my-4 space-x-4">
+                @{
+                    if (informacionNegocio.Item3.Count != 0)
+                    {
+                        <button onclick="accionesEditar()" class="bg-purple-600 px-4 rounded-lg text-white h-10">Editar Productos</button>
+                    }
+                }
+                <form asp-action="NuevoProducto" asp-controller="Negocios" method="post">
+                    <input type="hidden" asp-for="idNegocio">
+                    <button type="submit" class="bg-purple-600 px-4 rounded-lg text-white h-10">Nuevo Producto</button>
+                </form>
+            </div>
+            <div class="w-full grid grid-cols-5 gap-4  pb-5">
+                @{
+                    foreach (var producto in informacionNegocio.Item3)
+                    {
+                        <div class="min-w-[calc(20vw_-_22px)] h-[230px]  box-border border-purple-600 rounded-lg p-2">
+                            <div class="h-3/4 border border-black flex items-center justify-center rounded-lg">
+                                <img class="h-full w-full object-cover rounded-lg" src="https://c8.alamy.com/compes/jhyrtg/comida-casera-de-pollo-cordon-bleu-y-papas-fritas-jhyrtg.jpg" alt="">
+                            </div>
+                            <div class="flex h-1/4 items-center justify-center">
+                                <h1 class="font-bold">@producto.Nombre</h1>
+                            </div>
+                            <div class="acciones items-center justify-evenly text-purple-600" style="display: none;">
+                                <form asp-action="AdministrarProducto" asp-controller="Negocios" method="post">
+                                    <input type="hidden" name="idNegocio" value="@informacionNegocio.Item2.idNegocio">
+                                    <input type="hidden" name="idProducto" value="@producto.idProducto">
+                                    <button type="submit" class="border-2 border-purple-600 w-[35px] h-[35px] rounded-lg" title="Editar">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </form>
+                                <form asp-action="AdministrarProducto" asp-controller="Negocios" method="post">
+                                    <input type="hidden" name="idNegocio" value="@informacionNegocio.Item2.idNegocio">
+                                    <input type="hidden" name="idProducto" value="@producto.idProducto">
+                                    <button type="submit" class="border-2 border-purple-600 w-[35px] h-[35px] rounded-lg" title="Eliminar">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+        else
+        {
+            <div class="mt-10">
+                <h1 class="text-center text-3xl font-extrabold text-gray-900"> No hay productos registrados </h1>
+                <div class="h-10 flex justify-end px-10 my-4">
+                    <form asp-action="NuevoProducto" asp-controller="Negocios" method="post">
+                        <input type="hidden" asp-for="idNegocio">
+                        <button type="submit" class="bg-purple-600 px-4 rounded-lg text-white h-10">Nuevo Producto</button>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h1 class="text-center text-3xl font-extrabold text-gray-900">@informacionNegocio.Item4</h1>
+    }
+}
+
+
+<script >
+    const accionesEditar = () => {
+        const acciones = document.querySelectorAll('.acciones');
+        for (let i = 0; i < acciones.length; i++)
+        {
+            if (acciones[i].style.display === 'none')
+                    {
+                        acciones[i].style.display = 'flex';
+                    }
+                    else
+                    {
+                        acciones[i].style.display = 'none';
+                    }
+                    
+        }
+    }
+</script>

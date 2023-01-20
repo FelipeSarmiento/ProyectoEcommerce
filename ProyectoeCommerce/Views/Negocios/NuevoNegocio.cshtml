@@ -1,0 +1,57 @@
+﻿@model NegocioModel;
+@{
+    ViewData["Title"] = "NuevoNegocio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var categorias = ViewBag.Categorias != null ? ViewBag.Categorias : null;
+}
+<div class="min-h-full flex items-center justify-center">
+    <div class="w-9/12 space-y-8">
+        <div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Registrar Negocio</h2>
+            <h2 class="text-center mt-2 text-xl font-extrabold text-purple-600">@TempData["Message"]</h2>
+        </div>
+        <form class="mt-8 space-y-6" asp-action="NuevoNegocio" asp-controller="Negocios" method="POST">
+            <div class="rounded-md shadow-sm -space-y-px grid grid-cols-2 gap-x-8">
+                <div>
+                    <label for="nit" class="">NIT</label>
+                    <input asp-for="NITNegocio" id="nit" type="text" required autocomplete="off" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="NIT">
+                </div>
+                <div>
+                    <label for="nombre" class="">Nombre del Negocio</label>
+                    <input asp-for="Nombre" id="nombre" type="text" required autocomplete="off" class="appearance-none bg-gray-100 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Nombre del Negocio">
+                </div>
+                <div>
+                    <label for="telefono" class="">Telefono</label>
+                    <input asp-for="Telefono" id="telefono" type="text" required autocomplete="off" class="appearance-none bg-gray-100 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Primer Nombre">
+                </div>
+                <div>
+                    <label for="descripcion" class="">Descripción</label>
+                    <input asp-for="Descripcion" id="descripcion" type="text" required autocomplete="off" class="appearance-none bg-gray-100 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Descripción del negocio">
+                </div>
+                <div>
+                    <label for="direccion" class="">Dirección</label>
+                    <input asp-for="Direccion" id="direccion" type="text" required autocomplete="off" class="appearance-none bg-gray-100 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Direccion">
+                </div>
+                <div>
+                    <label for="categoria" class="">Categoria:</label>
+                    <select asp-for="idCategoria" id="categoria" class="bg-gray-100 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                        @{
+                            if (categorias != null)
+                            {
+                                foreach (var categoria in categorias.Item2)
+                                {
+                                    <option value="@categoria.idCategoria">@categoria.Nombre</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="flex space-x-4 justify-center">
+                <button type="submit" class="group relative w-2/4 overflow-x-hidden flex justify-center py-2 px-4 border text-sm font-medium rounded-md text-purple-600 border-2 border-purple-600 hover:bg-purple-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Registrar negocio
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

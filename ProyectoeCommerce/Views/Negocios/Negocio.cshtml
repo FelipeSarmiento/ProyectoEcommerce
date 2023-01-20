@@ -1,0 +1,15 @@
+﻿@model NegocioModel
+
+@{
+    var informacion = ViewBag.InformacionNegocio;
+    ViewData["Title"] = informacion.Item2.Nombre ?? "Negocio no Existe";
+
+    if (informacion.Item1)
+    {
+        <h1>@informacion.Item2.Nombre</h1>
+    }
+    else
+    {
+        <h1>No existe el negocio</h1>
+    }
+}

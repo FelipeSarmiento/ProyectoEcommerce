@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "ListarNegocios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var negocios = ViewBag.ListaNegocios;
+
+}
+
+<h1>ListarNegocios</h1>
+
+@{
+    foreach (var item in negocios)
+    {
+        <h1>@item.Nombre</h1>
+        <h1>@item.Descripcion</h1>
+    }
+}
+
